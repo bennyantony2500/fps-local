@@ -1,23 +1,35 @@
-# Use Node base image
-FROM node:18-bullseye-slim
+FROM node:20-bullseye-slim
 
-# Create app directory
+ENV PYTHON=/usr/bin/python3
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends python3 g++ build-essential && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends libsqlite3-dev && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p /app && chown -R node:node /app
+
+USER node
 WORKDIR /app
 
-# Copy package files first (for caching)
-COPY package.json yarn.lock ./
+COPY --chown=node:node .yarn ./.yarn
+COPY --chown=node:node .yarnrc.yml ./
+COPY --chown=node:node backstage.json ./
 
-# Install dependencies
-RUN corepack enable && yarn install
+ENV NODE_ENV=production
+ENV NODE_OPTIONS="--no-node-snapshot"
 
-# Copy rest of the app
-COPY . .
+COPY --chown=node:node yarn.lock package.json packages/backend/dist/skeleton.tar.gz ./
+RUN tar xzf skeleton.tar.gz && rm skeleton.tar.gz
 
-# Build Backstage
-RUN yarn build
+RUN corepack enable && yarn workspaces focus --all --production
 
-# Expose port (Backstage default)
+COPY --chown=node:node examples ./examples
+COPY --chown=node:node packages/backend/dist/bundle.tar.gz app-config*.yaml ./
+RUN tar xzf bundle.tar.gz && rm bundle.tar.gz
+
 EXPOSE 7007
-
-# Start backend
-CMD ["yarn", "start"]
+CMD ["node", "packages/backend", "--config", "app-config.yaml"]
