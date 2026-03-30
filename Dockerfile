@@ -28,7 +28,7 @@ ENV NODE_OPTIONS="--no-node-snapshot"
 COPY --chown=node:node yarn.lock package.json packages/backend/dist/skeleton.tar.gz ./
 RUN tar xzf skeleton.tar.gz && rm skeleton.tar.gz
 
-RUN yarn workspaces focus --all --production
+RUN yarn workspaces focus --all --production --ignore-scripts
 
 COPY --chown=node:node examples ./examples
 COPY --chown=node:node packages/backend/dist/bundle.tar.gz app-config*.yaml ./
