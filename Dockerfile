@@ -10,6 +10,9 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends libsqlite3-dev && \
     rm -rf /var/lib/apt/lists/*
 
+# Enable corepack as root before switching to node user
+RUN corepack enable
+
 RUN mkdir -p /app && chown -R node:node /app
 
 USER node
@@ -25,7 +28,7 @@ ENV NODE_OPTIONS="--no-node-snapshot"
 COPY --chown=node:node yarn.lock package.json packages/backend/dist/skeleton.tar.gz ./
 RUN tar xzf skeleton.tar.gz && rm skeleton.tar.gz
 
-RUN corepack enable && yarn workspaces focus --all --production
+RUN yarn workspaces focus --all --production
 
 COPY --chown=node:node examples ./examples
 COPY --chown=node:node packages/backend/dist/bundle.tar.gz app-config*.yaml ./
