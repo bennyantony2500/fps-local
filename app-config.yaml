@@ -87,28 +87,44 @@ auth:
 scaffolder:
   # see https://backstage.io/docs/features/software-templates/configuration for software template options
 
+# Catalog
+# ------------------------------------------------------------
 catalog:
   import:
     entityFilename: catalog-info.yaml
     pullRequestBranchName: backstage-integration
   rules:
-    - allow: [Component, System, API, Resource, Location]
+    - allow:
+        - Component
+        - System
+        - API
+        - Resource
+        - Location
+        - Group
+        - User
   locations:
-    # Local example data, file locations are relative to the backend process, typically `packages/backend`
+    # Local catalog
     - type: file
-      target: ../../examples/entities.yaml
-
-    # Local example template
+      target: ./catalog-info.yaml
+ 
+    # Full FPS catalog from GitHub
+    - type: url
+      target: https://raw.githubusercontent.com/bennyantony2500/fps-local/master/catalog-info.yaml
+      rules:
+        - allow:
+            - Component
+            - System
+            - API
+            - Resource
+            - Group
+            - User
+ 
+    # Example templates for scaffolder
     - type: file
       target: ../../examples/template/template.yaml
       rules:
         - allow: [Template]
-
-    # Local example organizational data
-    - type: file
-      target: ../../examples/org.yaml
-      rules:
-        - allow: [User, Group]
+ 
 
     ## Uncomment these lines to add more example data
     # - type: url
