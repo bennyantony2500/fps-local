@@ -44,13 +44,20 @@ backend:
 integrations:
   github:
     - host: github.com
-      # This is a Personal Access Token or PAT from GitHub. You can find out how to generate this token, and more information
-      # about setting up the GitHub integration here: https://backstage.io/docs/integrations/github/locations#configuration
-      token: ${GITHUB_TOKEN}
-    ### Example for how to add your GitHub Enterprise instance using the API:
-    # - host: ghe.example.net
-    #   apiBaseUrl: https://ghe.example.net/api/v3
-    #   token: ${GHE_TOKEN}
+      
+
+  azure:
+    - host: dev.azure.com
+      credentials:
+        - personalAccessToken: 3y3imdRDeo1bziUeAYisT4ce3w7M6R58onqHvTugH8A9VZfrW1MKJQQJ99CCACAAAAAgUyoLAAASAZDO28We
+
+# ------------------------------------------------------------
+# Azure DevOps Plugin
+# ------------------------------------------------------------
+azureDevOps:
+  host: dev.azure.com
+  token: 3y3imdRDeo1bziUeAYisT4ce3w7M6R58onqHvTugH8A9VZfrW1MKJQQJ99CCACAAAAAgUyoLAAASAZDO28We
+  organization: BA001101770
 
 proxy:
   ### Example for how to add a proxy endpoint for the frontend.

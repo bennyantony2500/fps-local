@@ -1,13 +1,11 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: poc-techm-root
-  description: An example of a Backstage application.
-  # Example for optional annotations
-  # annotations:
-  #   github.com/project-slug: backstage/backstage
-  #   backstage.io/techdocs-ref: dir:.
+  name: fps-spring-service
+  annotations:
+    dev.azure.com/host-org: dev.azure.com/BA001101770
+    dev.azure.com/project-repo: FPS-Spring-Pipeline/FPS-Spring-Pipeline
 spec:
-  type: website
-  owner: john@example.com
+  type: service
+  owner: user:default/guest
   lifecycle: experimental
