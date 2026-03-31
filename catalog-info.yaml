@@ -3,7 +3,7 @@ kind: Component
 metadata:
   name: fps-spring-service
   annotations:
-    dev.azure.com/host-org: dev.azure.com/BA001101770
+    dev.azure.com/host-org: dev.azure.com/TechM-FPS
     dev.azure.com/project-repo: FPS-Spring-Pipeline/FPS-Spring-Pipeline
 spec:
   type: service
